@@ -15,14 +15,14 @@ namespace OthelloSample
     {
         public int row { get; private set; }
         public int col { get; private set; }
-        public OthelloMove(int row, int col)
+        public OthelloMove(int row, Column col)
         {
             this.row = row;
-            this.col = col;
+            this.col = (int)col;
         }
 
         /// <summary>
-        /// Method to determine if one
+        /// Method to determine if one OthelloMove is equal to another
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
@@ -44,7 +44,7 @@ namespace OthelloSample
         /// <returns>String in the format of (row number, column number).</returns>
         public override string ToString()
         {
-            return "(" + row + "," + col + ")";
+            return "(" + (Column)col +""+ row + ")";
         }
     }
 }

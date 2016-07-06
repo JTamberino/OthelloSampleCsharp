@@ -82,9 +82,10 @@ namespace OthelloSample
         /// <returns>A string representing each space on the board and what Pieces is there.</returns>
         public override string ToString()
         {
-            string boardString ="";
+            string boardString ="  a b c d e f g h\n";
             for (int i = 1; i<9; i++)
             {
+                boardString = boardString + i + " ";
                 for (int j = 1; j<9; j++)
                 {
                     boardString = boardString + theBoard[i, j] + " "; //builds the string using the enum values

@@ -6,6 +6,14 @@ using System.Threading.Tasks;
 
 namespace OthelloSample
 {
+    /// <summary>
+    /// Enum for reference for the Column in an OthelloGame, with a=1 incrementing by 1 until
+    /// you get to h=8. iv is a specal value that stands for invalid and is equal to 0
+    /// </summary>
+    public enum Column
+    {
+        iv=0,a=1,b,c,d,e,f,g,h
+    }
 
 /// <summary>
 /// This class is the main class to handle the logic of the Othello Game, keeping track of player moves, score,
@@ -104,7 +112,7 @@ namespace OthelloSample
             {
                 //if the move is valid
                 
-                OthelloMove newMove = new OthelloMove(row,col); // creates the new move
+                OthelloMove newMove = new OthelloMove(row,(Column)col); // creates the new move
                 theMoves.Add(newMove); //adds the move to the current moveList
             }
 
@@ -173,7 +181,7 @@ namespace OthelloSample
         /// <param name="moveID">An OrderedPair value that corresponds to the id of the move in the validMoves list.</param>
         /// <returns>Returns the move corresponding to the OrderedPair provided, or a illegal move if
         /// there isn't a move with that id.</returns>
-        public OthelloMove FindMove(int row, int col)
+        public OthelloMove FindMove(int row, Column col)
         {
             foreach (OthelloMove lookMove in validMoves)
             {
@@ -311,19 +319,50 @@ namespace OthelloSample
                         }
                         Console.WriteLine();
                         while (theMove.Equals(new OthelloMove(0,0))) { 
-                            Console.WriteLine("Choose your move: Enter move in format of row number, column number");
+                            Console.WriteLine("Choose your move: Enter move in format of ColumnLetterRowNumber (i.e: a6, b7)");
                             string moveString = Console.ReadLine();
-                            string[] stringForMove = moveString.Split(',');
-                            if (stringForMove.Length != 2)
+                            
+                            if (moveString.Length != 2)
                             {//if the string for the move doesn't contain just two entries
                                 Console.WriteLine("Invalid Move Entry!");
                                 continue;
                             }
+                            Column moveCol;
+                            switch (moveString.ElementAt(0))
+                            {
+                                case 'a':
+                                    moveCol = Column.a;
+                                    break;
+                                case 'b':
+                                    moveCol = Column.b;
+                                    break;
+                                case 'c':
+                                    moveCol = Column.c;
+                                    break;
+                                case 'd':
+                                    moveCol = Column.d;
+                                    break;
+                                case 'e':
+                                    moveCol = Column.e;
+                                    break;
+                                case 'f':
+                                    moveCol = Column.f;
+                                    break;
+                                case 'g':
+                                    moveCol = Column.g;
+                                    break;
+                                case 'h':
+                                    moveCol = Column.h;
+                                    break;
+                                default:
+                                    moveCol = Column.iv;
+                                    break;
+                            }
                             try {
-                                theMove = theGame.FindMove(Int32.Parse(stringForMove[0]), Int32.Parse(stringForMove[1]));
+                                theMove = theGame.FindMove(Int32.Parse(moveString.ElementAt(1).ToString()), moveCol);
                             }
                             catch
-                            {//if the values for the move don't correspond to integer values
+                            {//if the values for the move don't correspond to valid values for a move
                                 Console.WriteLine("Invalid Move Entry!");
                                 continue;
                             }
