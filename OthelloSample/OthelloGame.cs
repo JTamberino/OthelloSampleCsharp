@@ -125,9 +125,9 @@ namespace OthelloSample
         /// <param name="theMoves">List to add the moves to.</param>
         void CheckMoves(OthelloBoard aBoard, List<OthelloMove> theMoves, Piece player)
         {
-            for (int i=1; i<9; i++)
+            for (int j=1; j<9; j++)
             {
-                for (int j = 1; j < 9; j++)
+                for (int i = 1; i < 9; i++)
                 {
                     if (aBoard.theBoard[i, j] == Piece._)
                         AddMoveIfValid(i, j, player,theMoves); //check if the move is valid if the space is empty
