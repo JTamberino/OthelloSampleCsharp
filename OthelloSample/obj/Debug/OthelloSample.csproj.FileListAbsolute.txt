@@ -1,0 +1,6 @@
+c:\users\custo_000\documents\visual studio 2015\Projects\OthelloSample\OthelloSample\bin\Debug\OthelloSample.exe.config
+c:\users\custo_000\documents\visual studio 2015\Projects\OthelloSample\OthelloSample\bin\Debug\OthelloSample.exe
+c:\users\custo_000\documents\visual studio 2015\Projects\OthelloSample\OthelloSample\bin\Debug\OthelloSample.pdb
+c:\users\custo_000\documents\visual studio 2015\Projects\OthelloSample\OthelloSample\obj\Debug\OthelloSample.csprojResolveAssemblyReference.cache
+c:\users\custo_000\documents\visual studio 2015\Projects\OthelloSample\OthelloSample\obj\Debug\OthelloSample.exe
+c:\users\custo_000\documents\visual studio 2015\Projects\OthelloSample\OthelloSample\obj\Debug\OthelloSample.pdb
