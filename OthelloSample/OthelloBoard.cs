@@ -12,7 +12,7 @@ namespace OthelloSample
     /// and B is Black and equal to 1.
     /// </summary>
     /// <author>Joseph Tamberino</author>
-    /// <date>7/6/2016</date
+    /// <date>7/8/2016</date
     enum Piece {X = -2, W = -1, _, B }; 
     /// <summary>
     /// The class for the representation of the board in a game of Othello.

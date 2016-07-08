@@ -10,7 +10,7 @@ namespace OthelloSample
     /// Struct of an ordered pair consisting of both row and column values
     /// </summary>
     /// <author>Joseph Tamberino</author>
-    /// <date>7/6/2016</date
+    /// <date>7/8/2016</date
     class OthelloMove
     {
         public int row { get; private set; }

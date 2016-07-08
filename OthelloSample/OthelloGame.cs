@@ -21,7 +21,7 @@ namespace OthelloSample
 /// user input and other related data.
 /// </summary
 /// <author>Joseph Tamberino</author>
-/// <date>7/7/2016</date>
+/// <date>7/8/2016</date>
     class OthelloGame
     {
 
