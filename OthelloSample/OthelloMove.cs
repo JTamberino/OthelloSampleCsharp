@@ -29,12 +29,12 @@ namespace OthelloSample
         public override bool Equals(Object obj)
         {
             try {
-                OthelloMove compare = (OthelloMove)obj;
-                return (this.row == compare.row && this.col == compare.col);
+
+                return (this.row == ((OthelloMove)obj).row && this.col == ((OthelloMove)obj).col);
             }
             catch
             {
-                return false; //returns false if the provided object isn't an OthelloMove
+                return false; //returns false for sure if the provided object isn't an OthelloMove
             }
             
         }

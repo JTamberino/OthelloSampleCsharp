@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 namespace OthelloSample
 {
     /// <summary>
-    /// Enum for reference for the Column in an OthelloGame, with a=1 incrementing by 1 until
-    /// you get to h=8. iv is a specal value that stands for invalid and is equal to 0
+    /// Enum for reference for the Column in an OthelloGame, with a=1 and incrementing by 1 until
+    /// you get to h=8. iv is a specal value that stands for invalid and is equal to 0. Any move with iv as it's column
+    /// by default is an invalid move.
     /// </summary>
     public enum Column
     {
@@ -20,7 +21,7 @@ namespace OthelloSample
 /// user input and other related data.
 /// </summary
 /// <author>Joseph Tamberino</author>
-/// <date>7/6/2016</date>
+/// <date>7/7/2016</date>
     class OthelloGame
     {
 
@@ -37,12 +38,14 @@ namespace OthelloSample
             validMoves = new List<OthelloMove>();
             theScore = 0;
             currentPlayer = Piece.B; //in Othello Black always goes first
+            computerPlayer = Piece._; //defaults to Empty space since the computer player will be chosen on game start.
             gameOver = false;
         }
 
 
         /// <summary>
-        /// This method initializes the game after the game is won.
+        /// This method initializes the game to the starting game state. Usually only called to play the 
+        /// game again after the first game is already over.
         /// </summary>
         void InitializeGame()
         {
@@ -50,8 +53,9 @@ namespace OthelloSample
             theScore = 0;
             gameOver = false;
             currentPlayer = Piece.B; //in Othello Black always goes first
-        
-    }
+            computerPlayer = Piece._; //defaults to Empty space since the computer player will be chosen on game start.
+
+        }
         /// <summary>
         /// Prints the board to the console to allow the Player the user to see the current state of the game
         /// board.
@@ -282,9 +286,21 @@ namespace OthelloSample
         Beginning: //label to get back here if needed at the end of the game
             
             Console.WriteLine("It's Time to play Othello!");
-            Console.WriteLine("Are you going to play as the Black Pieces or the White Pieces. Type B or W," +
+            
+            
+            while (theGame.computerPlayer == Piece._)
+            {
+                Console.WriteLine("Are you going to play as the Black Pieces or the White Pieces. Type B or W," +
                " then press ENTER to choose.");
-            String choosePlayer = Console.ReadLine().ToUpper();
+                try {
+                    theGame.computerPlayer = (Piece)((int)Enum.Parse(typeof(Piece), Console.ReadLine(), true)*-1);
+                }
+                catch
+                {
+                    Console.WriteLine("Invalid value.");
+                }
+            }
+            /*String choosePlayer = Console.ReadLine().ToUpper();
             while (choosePlayer != "B" && choosePlayer != "W")
             {
                 Console.WriteLine("Invalid answer. Type B or W, then press ENTER to choose which side you're playing as.");
@@ -294,6 +310,7 @@ namespace OthelloSample
                 theGame.computerPlayer = Piece.W;
             else
                 theGame.computerPlayer = Piece.B;
+            */
             int noTurnCount = 0; //checks to see how many times there's been no turn
             while (!theGame.gameOver){ //while the game isn't over, play the game
                 
@@ -322,49 +339,17 @@ namespace OthelloSample
                             Console.WriteLine("Choose your move: Enter move in format of ColumnLetterRowNumber (i.e: a6, b7)");
                             string moveString = Console.ReadLine();
                             
-                            if (moveString.Length != 2)
-                            {//if the string for the move doesn't contain just two entries
-                                Console.WriteLine("Invalid Move Entry!");
-                                continue;
-                            }
-                            Column moveCol;
-                            switch (moveString.ElementAt(0))
+                            if (moveString.Length == 2)
                             {
-                                case 'a':
-                                    moveCol = Column.a;
-                                    break;
-                                case 'b':
-                                    moveCol = Column.b;
-                                    break;
-                                case 'c':
-                                    moveCol = Column.c;
-                                    break;
-                                case 'd':
-                                    moveCol = Column.d;
-                                    break;
-                                case 'e':
-                                    moveCol = Column.e;
-                                    break;
-                                case 'f':
-                                    moveCol = Column.f;
-                                    break;
-                                case 'g':
-                                    moveCol = Column.g;
-                                    break;
-                                case 'h':
-                                    moveCol = Column.h;
-                                    break;
-                                default:
-                                    moveCol = Column.iv;
-                                    break;
-                            }
-                            try {
-                                theMove = theGame.FindMove(Int32.Parse(moveString.ElementAt(1).ToString()), moveCol);
-                            }
-                            catch
-                            {//if the values for the move don't correspond to valid values for a move
-                                Console.WriteLine("Invalid Move Entry!");
-                                continue;
+                                Column moveCol;
+                                try {
+                                    moveCol = (Column)Enum.Parse(typeof(Column), moveString.ElementAt(0).ToString(), true);
+                                    theMove = theGame.FindMove(Int32.Parse(moveString.ElementAt(1).ToString()), moveCol);
+                                }
+                                catch
+                                {//if the values for the move don't correspond to valid values for a move
+                                    theMove = new OthelloMove(0, 0);
+                                }
                             }
                             if (theMove.Equals(new OthelloMove(0, 0))) //if the move chosen wasn't in the move list
                                 Console.WriteLine("Invalid Move Entry!");
@@ -388,14 +373,14 @@ namespace OthelloSample
                  }               
                 else
                     noTurnCount++;
-                if (noTurnCount < 2) { //if one player can still make a move
+                if (noTurnCount < 2) { //if one player can still potentially make a move
                     theGame.SwitchPlayer(); //switches the current Player
                 }
                 else
                     theGame.gameOver = true;
             }
             theGame.updateScore();
-            theGame.PrintBoard();
+            theGame.PrintBoard();//prints the final board
             if (theGame.theScore > 0)
                 Console.WriteLine("Black Wins!");
             else if (theGame.theScore < 0)
